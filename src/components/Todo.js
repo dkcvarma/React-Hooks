@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 
 const todo = props => {
     const [todoName, setTodoName] = useState('');
@@ -19,7 +20,14 @@ const todo = props => {
         //     todoList: todoState.todoList.concat(todoState.userInput)
         // });
         SetTodoList(todoList.concat(todoName));
-    }
+        axios
+            .post('https://test-d7307.firebaseio.com/todos.json', {name: todoName})
+            .then(res => {
+                console.log(res);
+            }).catch(err => {
+                console.log(err);
+            });
+    };
 
     return (
         <React.Fragment>
