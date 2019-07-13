@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useReducer, useRef } from 'react';
+import React, { useState, useEffect, useReducer, useRef, useMemo } from 'react';
 import axios from 'axios';
 
 import List from './List';
@@ -128,7 +128,12 @@ const todo = props => {
                     <li key={todo.id} onClick={todoRemoveHandler.bind(this, todo.id)}>{todo.name}</li>
                 ))}
             </ul> */}
-            <List items={todoList} onClick={todoRemoveHandler} />
+            {useMemo(
+                () => (
+                    <List items={todoList} onClick={todoRemoveHandler} />
+                ), 
+                [todoList]
+            )}
         </React.Fragment>
     );
 }
