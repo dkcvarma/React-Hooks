@@ -30,7 +30,7 @@ const todo = props => {
         return () => {
             document.removeEventListener('mousemove', mouseMoveHandler);
         }
-    });
+    }, []);
 
     const inputChangeHandler = (event) => {
         // setTodoState({
