@@ -1,7 +1,10 @@
 import React, { useState, useEffect, useReducer, useRef } from 'react';
 import axios from 'axios';
 
+import List from './List';
+
 const todo = props => {
+    const [inputIsValid, setInputIsValid] = useState(false);
     // const [todoName, setTodoName] = useState('');
     // const [submittedTodo, setSubmittedTodo] = useState(null);
     // const [todoList, SetTodoList] = useState([]);
@@ -44,12 +47,20 @@ const todo = props => {
         console.log(event.clientX, event.clientY);
     }
 
-    useEffect(() => {
-        document.addEventListener('mousemove', mouseMoveHandler);
-        return () => {
-            document.removeEventListener('mousemove', mouseMoveHandler);
+    const inputValidationHandler = event => {
+        if (event.target.value.trim() === '') {
+            setInputIsValid(false);
+        } else {
+           setInputIsValid(true); 
         }
-    }, []);
+    }
+
+    // useEffect(() => {
+    //     document.addEventListener('mousemove', mouseMoveHandler);
+    //     return () => {
+    //         document.removeEventListener('mousemove', mouseMoveHandler);
+    //     }
+    // }, []);
 
     // useEffect(
     //     () => {
@@ -102,19 +113,22 @@ const todo = props => {
 
     return (
         <React.Fragment>
-        <input 
+            <input 
                 type="text" 
                 placeholder="Todo" 
                 // onChange={inputChangeHandler} 
                 // value={todoName}
                 ref={todoInputRef} 
+                onChange={inputValidationHandler}
+                style={{backgroundColor: inputIsValid ? 'transparent' : 'red'}}
             />
             <button type="button" onClick={todoAddHandler}>Add</button>
-            <ul>
+            {/* <ul>
                 {todoList.map(todo => (
                     <li key={todo.id} onClick={todoRemoveHandler.bind(this, todo.id)}>{todo.name}</li>
                 ))}
-            </ul>
+            </ul> */}
+            <List items={todoList} onClick={todoRemoveHandler} />
         </React.Fragment>
     );
 }
